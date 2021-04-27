@@ -1,0 +1,752 @@
+%        File: seshadri.tex
+%     Created: vie feb 12 02:00  2021 C
+% Last Change: vie feb 12 02:00  2021 C
+%
+\documentclass[12pt,a4paper]{book}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm, mathtools}
+\usepackage{url}
+\usepackage{tikz,tikz-cd}
+\usepackage[colorlinks=true,linktocpage=true,pagebackref=true,linkcolor=blue]{hyperref}
+\usepackage{graphicx}
+
+%\usepackage{Baskervaldx}
+%\usepackage{euler}
+%\usepackage{libertine}
+%\usepackage[libertine]{newtxmath}
+%\usepackage[charter]{mathdesign}
+%\usepackage{kpfonts}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+\usepackage[scr=boondox, bb= boondox]{mathalfa}
+
+\DeclareMathOperator\rk{rk}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Mor{Mor}
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\coker{coker}
+\DeclareMathOperator\Gr{Gr}
+
+\def\FF{\mathscr{F}}
+\def\LL{\mathscr{L}}
+\def\GG{\mathscr{G}}
+\def\OO{\mathscr{O}}
+\def\UU{\mathscr{U}}
+\def\Quot{\mathrm{Quot}}
+\def\PGL{\mathrm{PGL}}
+\def\GL{\mathrm{GL}}
+\def\SL{\mathrm{SL}}
+\def\ss{\mbox{(semi-)stable }}
+\def\Sch{\mathrm{Sch}}
+\def\kSch{k\text{-}\mathrm{Sch}}
+\def\Set{\mathrm{Set}}
+\def\pt{\mathrm{pt}}
+
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem*{prop*}{Proposition}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{corol}[thm]{Corollary}
+\theoremstyle{definition} \newtheorem{defn}[thm]{Definition}
+\theoremstyle{definition} \newtheorem{ejs}[thm]{Examples}
+\theoremstyle{definition} \newtheorem{ej}[thm]{Example}
+
+\newenvironment{thmbis}[1]
+{\renewcommand{\thethm}{\ref{#1}$'$}%
+\addtocounter{thm}{-1}%
+\begin{thm}}{\end{thm}}
+
+\renewcommand{\thethm}{\arabic{thm}}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+
+\title{Vector bundles over algebraic curves}
+\author{C. S. Seshadri}
+\date{ }
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{(Semi-)stable vector bundles}
+\section*{Introduction}
+Let $X$ be an irreducible smooth projective curve over an algebraically closed commutative field $k$.
+
+We say that a vector bundle $E$ on $X$ is semi-stable (resp. stable) if for every proper vector subbundle $F$ of $E$ we have
+\begin{equation*}
+  \deg(F)/\rk(F) \leq \deg(E)/\rk(E) \  \text{ (resp. $<$ ) }\ .
+\end{equation*}
+
+(Semi-)stable bundles are interesting because of the fact that for given integers $r$, $d$, with $r\geq 2$, there exists an algebraic variety $U_s(r,d)$ where the set of closed points is the set $S'(r,d)$ of isomorphism classes of stable vector bundles of rank $r$ and degree $d$. The closed points of a natural completion $U(r,d)$ of this variety can be seen as equivalence classes of semi-stable bundles. The varieties above are defined up to isomorphism by universal properties. If $r$ and $d$ are coprime, every semi-stable vector bundle is stable, and in that case there exists a ``Poincaré bundle'' over $U(r,d)\times X$, that is a vector bundle $V$ such that for every closed point $z$ of $U(r,d)$, the vector bundle $V$ over $X$ is in the isomorphism class $z$ (an element of $S'(r,d)$).
+
+Another justification of the above definitions: for every family $\mathscr{F}$ of vector bundles over $X$ parametrized by a Noetherian $k$-scheme $T$, the set of points $t$ of $T$ such that $\FF_t$ is \ss  is open in $T$. 
+
+In order to define an algebraic variety where the set of closed points is $S'(r,d)$, we first construct a family $\FF$ of vector bundles of rank $r$ and degree $d$ ``containing'' all the semi-stable bundles of rank $r$ and degree $d$, parametrized by a Noetherian $k$-scheme $R$. For this we use the Grothendieck schemes (or ``Quot schemes''). In fact, $R$ is an open subset of 
+\begin{equation*}
+  Q = \Quot^P_{\OO \otimes k^p/X/k}
+\end{equation*}
+($P$ being the Hilbert polynomial of a rank $r$ vector bundle of degree $d$ and given the choice of an ample line bundle over $X$).
+
+The reductive group $\PGL(p)$ acts on $R$, and the quotient $R/\PGL(p)$, as a set, is the set of isomorphism classes of vector bundles of the family $\FF$.
+
+We are thus reduced to ``quotient'' $R$ by $\PGL(p)$. This can only be done on an open subset of $R$, formed by the so-called ``semi-stable'' points for the action of $\PGL(p)$. We can show that a point $q$ of $R$ is (semi-)stable if and only if $\FF_q$ is, which justifies the definitions above.
+
+Unfortunately the study of the action of $\PGL(p)$ on $Q$ is difficult, and we are led to use a better known variety $Y$ over which $\SL(p)$ acts, with an $\SL(p)$-morphism
+\begin{align*}
+  \tau :R &\longrightarrow Y. 
+  \end{align*}
+
+  We can then compare the points $q$ of $R$ such that $\FF_q$ is (semi-)stable, and the \ss points of $Y$ of the action of $\SL(p)$: one finds that the latter are the images by $\tau$ of the former, and that $\tau$ is injective. We can deduce the construction of the desired varieties. We call the variety $U(r,d)$ (resp. $U_s(r,d)$) the \emph{moduli variety} of semi-stable (resp. stable) bundles of rank $r$ and degree $d$.
+
+  On Section \ref{section 1I}, we give the main definitions and elementary properties of \ss\ vector bundles.
+
+  On Section \ref{section 1II}, we specify the required properties of a moduli variety of \ss\ vector bundles.
+
+  On Section \ref{section 1III} [REF], we carry out the construction of the moduli varieties. Results from Mumford's Theory are stated without proof.
+
+  On Section \ref{section 1IV} [REF], we treat the case where $k$ is the field of complex numbers. We can then stablish a relation between semi-stable vector bundles over $X$ and unitary representations of the fundamental group of $X$.
+
+  On section 5 [REF], we determine the singular points of the moduli varieties.
+
+  On section 6 [REF] we give some results without proof, concerning: the Picard variety of the moduli varieties, the existence of Poincaré bundles, the rationality of the moduli varieties and their topological properties in the case where $k$ is the field of complex numbers.
+
+  \section{Stable bundles, semi-stable bundles. Some properties}\label{section 1I}
+  \begin{defn}
+    A vector bundle $E$ on $X$ is \emph{semi-stable} (resp. \emph{stable}) if for every proper subbundle $F$ of $E$, we have:
+    \begin{equation*}
+      \mu(F) \leq \mu(E) \  \text{ (resp. $\mu(F)<\mu(E)$ ) }\ .
+    \end{equation*}
+    Equivalent definitions: the bundle $E$ is semi-stable (resp. stable) if and only if one of the following three properties is verified:
+    \begin{itemize}
+      \item[(i)] For every proper quotient bundle $F$ of $E$, we have
+    \begin{equation*}
+      \mu(F) \geq \mu(E) \  \text{ (resp. $\mu(F)>\mu(E)$ ) }\ .
+    \end{equation*}
+      \item[(ii)] For every proper subsheaf $F$ of $E$, we have
+    \begin{equation*}
+      \mu(F) \leq \mu(E) \  \text{ (resp. $\mu(F)<\mu(E)$ ) }\ .
+    \end{equation*}
+      \item[(iii)] For every proper quotient sheaf $F$ of $E$, we have
+    \begin{equation*}
+      \mu(F) \geq \mu(E) \  \text{ (resp. $\mu(F)>\mu(E)$ ) }\ .
+    \end{equation*}
+    \end{itemize}
+  \end{defn}
+  \paragraph{Remarks:}
+    \begin{itemize}
+      \item 
+    Every line bundle on $X$ is stable.
+  \item
+    If $\rk(E)$ and $\deg(E)$ are coprime, the bundle $E$ is semi-stable if and only if it is stable.
+  \item
+    The bundle $E$ is semi-stable (resp. stable) if and only if its dual is.
+  \item
+    Let $L$ be a line bundle on $X$. Then $E$ is semi-stable (resp. stable) if and only if $E\otimes L$ is.
+\end{itemize}
+
+    Let $r$ and $d$ be two integers such that $r\geq 2$. We denote $S(r,d)$ the set of isomorphism classes of semi-stable bundles on $X$, of rank $r$ and degree $d$. We denote $S'(r,d)$ the subset of $S(r,d)$ consisting on isomorphism classes of stable bundles.
+
+    According to the above, for every integer $k$, the choice of a line bundle of degree $k$ allows us to define a bijection
+    \begin{align*}
+       S(r,d) &\longrightarrow S(r,d+kr)
+      \end{align*}
+      inducing a bijection $S'(r,d) \rightarrow S'(r,d+kr)$.
+
+      On the other hand, if $r$ and $d$ are coprime, we have
+      \begin{equation*}
+	S(r,d)=S'(r,d).
+      \end{equation*}
+
+      \subsection{The Harder--Narasimhan filtration}
+      This is a first justification of the definitions above. Let $E$ be a vector bundle on $X$.
+
+      \begin{prop}\label{1.2}
+	There exists a unique subbundle $E_1$ of $E$ such that for every subbundle $F$ of $E$, we have
+	\begin{equation*}
+	  \mu(F) \leq \mu(E_1)
+	\end{equation*}
+	and $\rk(F) \leq \rk(E_1)$ if $\mu(F)=\mu(E_1)$.
+
+	This subbundle is semistable and it is called the \emph{maximal semi-stable subbundle of $E$}.
+      \end{prop}
+
+      \begin{lemma}\label{1.3}
+	There exists an integer $n_0$ such that for every subbundle $F$ of $E$, we have
+	\begin{equation*}
+	  \mu(F) \leq n_0.
+	\end{equation*}
+      \end{lemma}
+
+      Let $\OO(1)$ a very ample bundle on $X$. Then there exists an integer $p$ such that for every integer $n$ greater than $p$, we have:
+      \begin{equation*}
+	\Hom(\OO(n),E)=\left\{ 0 \right\}.
+      \end{equation*}
+
+      On the other hand, since a line bundle of degree greater than $g$ has nonzero global sections, for every line bundle $L$ on $X$ of degree greater that $p\deg(\OO(1))+g$, we have
+      \begin{equation*}
+	\Hom(\OO(p),L)\neq \left\{ 0 \right\},
+      \end{equation*}
+      and thus $\Hom(L,E)=\left\{ 0 \right\}$.
+
+      Applying the above to the bundles $\wedge^r E$, with $1\leq r\leq \rk(E)-1$ it is easy to achieve the proof of Lemma \ref{1.3}.
+
+      The existence of a subbundle $E_1$ of $E$ satisfying the conditions of Proposition \ref{1.2} follows. It is immediate that $E_1$ is semistable. It remains to prove its uniqueness. Suppose that $E_1'$ verifies the same properties that $E_1$, and that $E_1'\neq E_1$. 
+
+      Let $\pi: E \rightarrow E/E_1'$ the projection. We have $\pi(E_1)\neq 0$. Let $G$ the subbundle of $E/E_1'$ generated by $\pi(E_1)$. Then, since $E_1$ semi-stable, we have $\mu(G)\geq \mu(E_1)$. 
+
+      We have an exact sequence of vector bundles on $X$:
+      \begin{center}
+	\begin{tikzcd}
+	  0 \rar & E_1' \rar & \pi^{-1}(G) \rar & G \rar & 0.
+	\end{tikzcd}
+      \end{center}
+
+      After the properties of $E'_1$, we have:
+      \begin{equation*}
+	\mu(\pi^{-1}(G)) < \mu(E_1'), \ \text{ since }\ \rk(\pi^{-1}(G)) > \rk(E_1')
+      \end{equation*}
+      that is
+      \begin{equation*}
+	\frac{\deg(G) + \deg(E_1')}{\rk(G) + \rk(E_1')} < \frac{\deg(E_1')}{\rk(E_1')},
+      \end{equation*}
+      from where we get
+      \begin{equation*}
+	\mu(G) < \mu(E_1')=\mu(E_1),
+      \end{equation*}
+
+      which is absurd. This proves the uniqueness of $E_1$ and completes the proof of Proposition \ref{1.2}. \\
+
+      We immediately deduce the
+      \begin{thm}[Harder--Narasimhan] \label{1.4}
+	There exists a unique filtration of $E$ by vector subbundles, 
+	\begin{equation*}
+	  \left\{ 0 \right\} = E_0 \subset E_1 \subset E_2 \subset \cdots \subset E_{s-1} \subset E_s = E,
+	\end{equation*}
+	such that for $1\leq i \leq s-1$, $E_i/E_{i-1}$ is the maximal semi-stable subbundle of $E/E_{i-1}$. We call it the \emph{Harder--Narasimhan filtration} of $E$.
+      \end{thm}
+
+      We can now deduce the classification of indecomposable and not semi-stable vector bundles of rank $2$ on $X$. Let $Z_0$ be the set of isomorphism classes of such bundles. Using Proposition [REF] from Appendix II [REF] and the above theorem, we can prove the
+      \begin{corol} \label{1.5}
+	Let $f:Z_0 \rightarrow J\times J$ the mapping defined by $f(E)=(\det(E),L)$, $L$ being the maximal semi-stable subbundle of $E$. The image of $f$ consists on pairs $(L_1,L_2$ of line bundles such that
+	\begin{itemize}
+	  \item[(i)] $2\deg(L_1) > \deg(L_2)$
+	  \item[(ii)] $h^1(X,L_2^2 \otimes L_1^{-1}) \neq 0$. 
+	\end{itemize}
+
+	Moreover, the fibre of $f$ over a point $(L_1,L_2)$ in its image can be identified with the projective space
+	\begin{equation*}
+	  \mathbb{P}(H^1(X,L_2^2\otimes L_1^{-1})).
+	\end{equation*}
+      \end{corol}
+
+      \subsection{Morphisms of (semi-)stable bundles. Jordan--Hölder theorem}
+      \begin{prop}\label{1.6}
+	Let $E$ and $F$ be semi-stable bundles on $X$. Then
+	\begin{itemize}
+	  \item[\rm a)] If $\mu(F)<\mu(E)$, we have $\Hom(E,F)=\left\{ 0 \right\}$.
+	  \item[\rm b)] If $E$ and $F$ are stable, and $\mu(F)=\mu(E)$, we have $\Hom(E,F)=\{0\}$ or $E\cong F$.
+	  \item[\rm c)] If $E$ is stable, $E$ is simple, that means that their only endomorphisms are homotheties.
+	\end{itemize}
+      \end{prop}
+      
+      \paragraph{\rm a)} Let $f: E \rightarrow F$ a nonzero morphism. Then we have
+      \begin{equation*}
+	\mu(\im(f)) \leq \mu(F) < \mu(E)
+      \end{equation*}
+      since $F$ is semi-stable. Thus $\ker(f) \neq \left\{ 0 \right\}$ and $\mu(\ker(f)) > \mu(E)$, which contradicts the semi-stability of $E$.
+
+      This proves a).
+
+      \paragraph{\rm b)} With the same notations that a), we have everywhere the big inequalities, and since $f$ is nonzero and $E$ is stable, we have $\ker(f)=\left\{ 0 \right\}$ and $\im(f)$ is isomorphic to $E$. Since $\mu(E)=\mu(F)$ and $F$ is stable, we have $\im(f)=F$, and $f$ is an isomorphism.
+
+      This proves b).
+
+      \paragraph{\rm c)} Let $f:E\rightarrow E$ be a nonzero morphism. Like in b, we show that it is an isomorphism. Let $x$ a point of $X$. If $\lambda$ is an eigenvalue of $f_x$, $f-\lambda I_X$ is not an isomorphism, and thus $f-\lambda I_X=0$, and $f$ is a homothety.
+
+      This proves c and concludes the proof of Proposition \ref{1.6}. \\
+
+      \begin{corol}\label{1.7}
+	Let $E_1$ and $E_2$ semi-stable vector bundles on $X$ such that $\mu(E_1)=\mu(E_2)=\mu$, and $E$ an extension of $E_2$ by $E_1$. Then $E$ is semi-stable.
+      \end{corol}
+       We have an exact sequence
+      \begin{center}
+	\begin{tikzcd}
+	  0 \rar & E_1 \rar & E \rar & E_2 \rar& 0,
+	\end{tikzcd}
+      \end{center}
+      thus $\mu(E)=\mu$. We are going to show that $E$ is semi-stable.
+
+      Let $F$ be a proper subbundle of $E$, $F'$ its maximal semi-stable subbundle. Let us suppose that $\mu(F)>\mu$, so $\mu(F')>\mu$, and after part a on the Proposition above, we have $\Hom(F',E_2)=\left\{ 0 \right\}$, from where we deduce that $F'$ is a subbundle of $E_1$. But this is absurd since $E_1$ is semistable.
+      
+      This proves Corollary \ref{1.7}. \\
+
+      Let $\mu$ be a rational number, and $C_\mu$ the categorie whose objects are semi-stable vector bundles $E$ on $X$ with $\mu(E)=\mu$, and the morphisms of vector bundles between these bundles.
+      
+      After Corollary \ref{1.7}, we can define in an obvious way the direct sum of two objects (or two morphisms) of the category $C_\mu$.
+
+      \begin{prop}\label{1.8}
+	Let $E$ and $F$ be semi-stable vector bundles on $X$ so that $\mu(E)=\mu(F)$, and $f:E\rightarrow F$ a vector bundle morphism. 
+
+	Then $f$ has constant rank, $\ker(f)$ and $\coker(f)$ are semi-stable vector bundles and
+	\begin{equation*}
+	  \mu(\ker(f))=\mu(\coker(f))=\mu(E).
+	\end{equation*}
+      \end{prop}
+
+      The morphism $f$ has constant rank if and only if $\coker(f)$ is torsion free. Let $T$ be the torsion subsheaf of $\coker(f)$ and
+      \begin{equation*}
+	F'= \ker(F\rightarrow \coker(f)/T).
+      \end{equation*}
+      Since $E$ is semi-stable, we have $\mu(\im(f))\geq \mu(E)$, and since $F$ is also semi-stable, $\mu(F')\leq \mu(F)$. Thus $F'=\im(f)$ and $\mu(\im(f))=\mu(E)$. We immediately deduce
+      \begin{equation*}
+	\mu(E)=\mu(\ker(f))=\mu(\coker(f)).
+      \end{equation*}
+      This concludes the proof of Proposition \ref{1.8}. \\
+
+      From the above we get
+      \begin{prop}\label{1.9}
+	The category $C_\mu$ is Abelian, Artinian and Noetherian.
+      \end{prop}
+
+      We can thus apply the Jordan--Hölder theorem to $C_\mu$, which gives 
+
+      \begin{thm}\label{1.10}
+	Let $E$ be a semi-stable vector bundle on $X$. There exists a filtration of $E$ by vector subbundles
+	\begin{equation*}
+	  0=E_{p+1} \subset E_p \subset \cdots \subset E_1 \subset E_0=E
+	\end{equation*}
+	such that for $0\leq i\leq p$, $E_i/E_{i+1}$ is stable and $\mu(E_i/E_{i+1})=\mu(E)$.
+
+	Moreover, the isomorphism class of the bundle $\sum_{i=0}^p E_i/E_{i+1}$ depends only on that of $E$. We denote this isomorphism class by $\Gr(E)$.
+      \end{thm}
+
+      The following proposition is related with Proposition 32 [REF].
+
+      \begin{prop}\label{1.11}
+	Let $E$ be an object of $C_\mu$. The bundle $E$ is stable if and only if for every object $E'$ of $C_\mu$ such that $\Gr(E')=\Gr(E)$, we have $E\cong E'$.
+      \end{prop}
+
+      We suppose that $E$ is not stable, and verify the hypotheses of the Proposition. We can write $\Gr(E)=F_1 \oplus F_2$, $F_1$ being stable and $F_2$ a direct sum of stable bundles. We easily deduce from part b of Proposition \ref{1.6} that every exact sequence
+      \begin{center}
+	\begin{tikzcd}
+	  0 \rar & F_1 \rar & F_1 \oplus F_2 \rar & F_2 \rar & 0
+	\end{tikzcd}
+      \end{center}
+      \begin{center}
+	\begin{tikzcd}
+	  \text{(resp. }\ \ 	  0 \rar & F_2 \rar & F_1 \oplus F_2 \rar & F_1 \rar & 0 \text{)}
+	\end{tikzcd}
+      \end{center}
+      is split. Thus it suffices to show that $h^1(X,F_2^* \otimes F_1) \neq 0$ or $h^1(X,F_1^* \otimes F_2) \neq 0$. Again from part b of Proposition \ref{1.6}, we have
+      \begin{equation*}
+	h^0(X,F_1^* \otimes F_2)= h^0(X,F_2^* \otimes F_1).
+      \end{equation*}
+      We deduce with the theorem of Riemann--Roch, that
+      \begin{equation*}
+	h^1(X,F_2^* \otimes F_1) - h^1(X,F_1^* \otimes F_2) = 2(\rk(F_1) - \rk(F_2)) \mu.
+      \end{equation*}
+      If this term is nonzero, one of the integers $h^1(X,F_2^* \otimes F_1)$ and $h^1(X,F_1^*\otimes F_2)$ is nonzero. If it is zero,
+      \begin{equation*}
+	\chi(X,F_2^* \otimes F_1) = \rk(F_1)\rk(F_2)(1-g) < 0,
+      \end{equation*}
+      and thus $h^1(X,F_2^* \otimes F_1)$ is nonzero.
+
+      This concludes the proof of Proposition \ref{1.11}. 
+
+      \section{Fine moduli spaces --- Coarse moduli spaces} \label{section 1II}
+      In this section, we pose the problem of the classification of (semi-)stable bundles.
+
+      Let $Z$ be a set of isomorphism classes on $X$, which we will suppose all of the same rank.
+
+      \begin{defn}\label{1.12}
+	A \emph{family of elements of $Z$ parametrized by a Noetherian $k$-scheme $Y$} is a locally free sheaf $\FF$ over $Y\times_k X$ such that for every closed point $y$ of $Y$, the isomorphism class of $\FF_y$ is an element of $Z$.
+
+	Two families $\FF_1$ and $\FF_2$ of elements of $Z$ parametrized by $Y$ are said \emph{isomorphic} if there exists an invertible sheaf $L$ on $Y$ such that
+	\begin{equation*}
+	  \FF_2 = \FF_1 \otimes p_Y^*(L),
+	\end{equation*}
+       $p_Y$ denoting the projection $X\times_k Y \rightarrow Y$. In this case we write $\FF_1 \sim \FF_2$.
+      \end{defn}
+
+      \begin{defn}\label{1.13}
+	A \emph{fine moduli space} for $Z$ is given by a Noetherian $k$-scheme $Y_0$ and a family $\FF_0$ of elements of $Z$ parametrized by $Y_0$ such that for every family $\FF$ of elements of $Z$ parametrized by a finite type $k$-scheme $Y$, there exists a unique morphism
+	\begin{equation*}
+	  \rho_\FF: Y \rightarrow Y_0
+	\end{equation*}
+	such that
+	\begin{equation*}
+	  \rho_\FF^*(\FF_0) \sim \FF.
+	\end{equation*}
+      \end{defn}
+
+  \paragraph{Remark: Functorial interpretation} \ \\
+  Let
+  \begin{equation*}
+    F: \kSch \longrightarrow \Set
+  \end{equation*}
+  be the functor associating to $Y$ the set of isomorphism classes of families of elements of $Z$ parametrized by $Y$. Then a fine moduli space for $Z$ is simply the given by a Noetherian $k$-scheme representing $F$.
+  Let $\rho:Z\rightarrow Y_0(k)$ the map associating to every element $z$ of $Z$, represented by a bundle $E$ over $X=X\times \{\pt\}$ the element $\rho_E(\pt)$ of $Y_0(k)$. Then we easily see that $\rho$ \emph{is a bijection}.
+  On the other hand it is also immediate that $(Y_0,\FF_0)$ is unique up to isomorphism. We call $\FF_0$ a \emph{Poincaré bundle}
+
+  \begin{defn} \label{1.14}
+    A \emph{coarse moduli space} for $Z$ is a morphism of functors $\kSch \rightarrow \Set$
+    \begin{equation*}
+      \Psi: F \longrightarrow \Mor(-,Y_0),
+    \end{equation*}
+    $Y_0$ being a Noetherian $k$-scheme satisfying the following conditions:
+    \begin{itemize}
+      \item[(i)] $\Psi(*):F(*)\rightarrow Y_0(k)$ is a bijection (where $*=\Spec(k)$, so $F(*)=Z$).
+      \item[(ii)] For every morphism of functors $\Psi_1:F\rightarrow \Mor(-,Y_0)$, $Y_1$ being a Noetherian $k$-scheme, there exists a unique morphism $f:Y_0\rightarrow Y_1$ such that the following diagram is commutative:
+	\begin{center}
+	  \begin{tikzcd}
+	    & \Mor(-,Y_0) \arrow{dd}{\Mor(-,f)}	    \\ 
+	    F \arrow{ru}{\Psi} \arrow{rd}{\Psi_1} & \\
+	    & \Mor(-,Y_1).  
+	  \end{tikzcd}
+	\end{center}
+    \end{itemize}
+  \end{defn}
+
+  A fine moduli space for $Z$ defines in an obvious way a coarse moduli space for $Z$.
+
+  It is immediate that a coarse moduli space for $Z$ is unique (up to isomorphism).
+
+  In what follows, we will admit the following result: for every pair of integers $(r,d)$ such that $r\geq 2$, the set $S'(r,d)$ of isomorphism classes of stable vector bundles on $X$ of rank $r$ and degree $d$ is nonempty. This will be proven in Section III [REF] [IT SAYS ON THE THIRD PART?].
+
+  Recall that $S(r,d)$ denotes the set of isomorphism classes of semi-stable bundles on $X$, of rank $r$ and degree $d$. We then have
+  \begin{prop}\label{1.15}
+    There does not exist a coarse moduli space for $S(r,d)$, if $r$ and $d$ are not coprime. 
+  \end{prop}
+    (See Theorem 48 [REF], which completes this result).
+
+    Since $r$ and $d$ are not coprime, there exist two pairs $(r_1,d_1)$ and $(r_2,d_2)$ of integers such that $r_1\geq 1$ and $r_2\geq 2$, $r_1+r_2=r$, $d_1+d_2=d$ and 
+    \begin{equation*}
+      \frac{d_1}{r_1} + \frac{d_2}{r_2}=\frac{d}{r}.
+    \end{equation*}
+    Let $E_1$ be a stable bundle of rank $r_1$ and degree $d_1$ and $E_2$ a stable bundle of rank $r_2$ and degree $d_2$ on $X$. After Proposition \ref{1.11}, there exists a semi-stable bundle on $X$ of rank $r$ and degree $d$ such that $\Gr(E)=E_1\oplus E_2$ and not isomorphic to $E_1 \oplus E_2$. We have 
+    \begin{lemma}\label{1.16}
+      There exists a bundle $E_0$ on $\mathbb{A}^1\times X$, such that
+      \begin{equation*}
+	F_0|_{\{0\}\times X} \cong E_1 \oplus E_2 \ \text{ and } \ F_0|_{\{t\} \times X}\cong E \ \text{ if $t\neq 0$ is an element of $k$.}
+      \end{equation*}
+      
+    \end{lemma}
+
+    We can suppose that we have an exact sequence of vector bundles on $X$:
+    \begin{center}
+      \begin{tikzcd}
+	0 \rar & E_1 \rar & E \rar & E_2 \rar & 0.
+      \end{tikzcd}
+    \end{center}
+    We consider the element $u$ of $H^1(\mathbb{A}^1 \times X, p_X^*(E_2^*\otimes E_1))$, where $p_X$ denotes the projection $\mathbb{A}^1 \times X \rightarrow X$, image of the element $s\otimes u_0$ of $H^0(\mathbb{A}^1,\OO) \otimes H^1(X,E_2^*\otimes E_1)$, $s$ being the section of $\OO$ associated to $1_k$ and $u_0$ corresponding to the above exact sequence. It is easy to see that the extension $F_0$ of $p_X^*(E_2)$ by $p_X^*(E_1)$ defined by $u$ defines the hypotheses of Lemma \ref{1.16}.
+
+    Let us prove now Proposition \ref{1.15}.
+    We recover the notations from Definition \ref{1.14}. Suppose that there exists a coarse moduli space $Y_0$ for $S(r,d)$. The bundle $F_0$ from Lemma \ref{1.16} is a family of elements of $S(r,d)$ parametrized by $\mathbb{A}^1$. We then have
+    \begin{equation*}
+      \alpha_{F_0}(0) = \rho(E_1\oplus E_2) \ \text{ and } \ \alpha_{F_0}(t)=\rho(E) \ \text{ if } \ t\neq 0,
+    \end{equation*}
+    but since $\alpha_{F_0}$ is induced by a morphism $\mathbb{A}^1\rightarrow Y_0$, we have $\alpha_{F_0}(0)=\rho(E)$, by continuity, which is absurd.
+
+    This achieves the proof of Proposition \ref{1.15}. \\
+
+  \paragraph{Remark: Change of the base field} \ \\
+  Let $K$ be a commutative algebraically closed field extension of $k$, $X_K=X\times_k \Spec(K)$, $E$ a vector bundle on $X$ and $E_K=p^*(E)$, $p$ denoting the projection $X_K \rightarrow X$. Then we can show that $E_K$ \emph{is semi-stable if and only if $E$ is} (see Chapter 3 [REF] [?]).
+  
+  We could define a family of semi-stable bundles parametrized by a Noetherian $k$-scheme $Y$ the following way: it is a locally free sheaf $E$ over $Y\times_k X$ such that for every point $y$ of $Y$, the vector bundle $(E_y)_{\overline{k(y)}}$ over $X_{\overline{k(y)}}$ ($\overline{k(y)}$ denoting the algebraic closure of $k(y)$), is semi-stable.
+
+  In fact these two definitions of a family of semi-stable bundles are equivalent (see Theorem \ref{1.19'}).
+
+  \section{The moduli spaces of (semi-)stable bundles}\label{section 1III}
+  In this section we sketch the proofs of the following results:
+  \begin{thm}\label{1.17}
+    Let $(r,d)$ be a pair of integers such that $r\geq 2$. There exists a coarse moduli space for $S'(r,d)$ where the underlying $k$-scheme is a smooth quasi-projective variety, denoted by $U_s(r,d)$.
+
+    This variety has a natural compactification denoted by $U(r,d)$. The set of $k$-valued points of $U(r,d)$ is isomorphic to the quotient of $S(r,d)$ by the following equivalence relation: for every pair $(E,F)$ of semi-stable bundles on $X$ of rank $r$ and degree $d$, $E$ and $F$ are equivalent if and only if $\Gr(E)=\Gr(F)$. The variety $U(r,d)$ is normal.
+  \end{thm}
+
+  In the case where $r$ and $d$ are coprime, we have $U(r,d)=U_s(r,d)$.
+
+  \begin{thm}\label{1.18}
+    Let $(r,d)$ a pair of coprime integers, with $r\geq 2$. Then there exists a fine moduli space for $S(r,d)$.
+  \end{thm}
+
+  Obviously the underlying $k$-scheme is $U(r,d)$. After Theorem \ref{1.18}, there exists a Poincaré bundle over $U(r,d)$. We will see on section VI [REF] that there exists a ``natural'' Poincaré bundle.
+
+  We have already admitted that $U_s(r,d)\neq \varnothing$. We can deduce that
+  \begin{equation*}
+    \dim(U(r,d))= r^2(g-1) +1.
+  \end{equation*}
+
+  Finally we show that semi-stability (resp. stability) is an ``open'' property.
+
+  \begin{thm}\label{1.19}
+    Let $Y$ be a Noetherian $k$-scheme and $W$ a vector bundle on $Y\times X$. Then the set of points $y$ of $Y(k)$ such that $W_y$ is semi-stable (resp. stable) is an open subset of $Y$.
+  \end{thm}
+
+  \paragraph{Remark:} In fact we can show the following theorem:
+
+  \begin{thmbis}{1.19} \label{1.19'}
+    Let $Y$ be a Noetherian $k$-scheme and $W$ a locally free sheaf over $Y\times_k X$. Then the set of points $y$ of $Y$ such that $(W_y)_{\overline{k(y)}}$ is semi-stable (resp. stable) on $X_{\overline{k(y)}}$ is an open subset of $Y$.
+  \end{thmbis}
+
+  (See the remark at the end of Section II of the third chapter [REF]).
+  
+  \paragraph{Remark:} The variety $U(r,d)$ also has a ``universal property'': for every family $E$ of semi-stable vector bundles of rank $r$ and degree $d$ parametrized by a Noetherian $k$-scheme $T$, there exists a unique morphism $f:T\rightarrow U(r,d)$, such that for every point $t$ of $T(k)$, the point $f(t)$ of $U(r,d)$ is associated to $\Gr(E_t)$.
+
+  The first stage on the constrution of the moduli spaces is the search of a family of elements of $S(r,d)$ ``containing'' all the elements of $S(r,d)$. We achieve this by using the Grothendieck schemes.
+
+  \subsection{Grothendieck schemes}
+  We easily see that to study $S(r,d)$, we can take $d$ as big as we want. This justifies 
+  \begin{lemma}\label{1.20}
+    Let $(r,d)$ a pair of integers such that $r\geq 2$ and $d> r(2g-1)$. Then if $E$ is a semi-stable vector bundle on $X$, of rank $r$ and degree $d$, we have:
+    \begin{itemize}
+      \item[\rm (i)] the bundle $E$ is generated by its global sections
+      \item[\rm (ii)] $h^1(X,E)=0$.
+    \end{itemize}
+  \end{lemma}
+
+  We then have, after the Theorem of Riemann--Roch,
+  \begin{equation*}
+    h^0(X,E)=d+r(1-g).
+  \end{equation*}
+
+  In order to prove (ii), we suppose that $h^1(X,E)\neq 0$. By Serre duality, we have $\Hom(E,K)\neq \left\{ 0 \right\}$, $K$ denoting the canonical bundle on $X$. Since $E$ is semi-stable, this implies that
+  \begin{equation*}
+    r(2g-2) = r\deg(K) \geq d,
+  \end{equation*}
+   but this is false by hypothesis, so we have $h^1(X,E)=0$.
+
+   In order to prove (i), it remains to show that for every point $x$ of $X$, the canonical morphism
+   \begin{equation*}
+     r_x: H^0(X,E) \longrightarrow E_x
+   \end{equation*}
+   is surjective.
+
+   If $L_x$ denotes the line bundle on $X$ associated to the divisor $x$, we have an exact sequence of sheaf morphisms on $X$
+   \begin{center}
+     \begin{tikzcd}
+       0 \rar & E\otimes L_x^{-1} \rar & E \rar & E_x \rar & 0,
+     \end{tikzcd}
+   \end{center}
+   $E_x$ denoting this time the sheaf on $X$ centered on $x$ and with germ $E_x$ in that point. The long exact sequence associated to the exact sequence above gives
+   \begin{center}
+     \begin{tikzcd}
+       H^0(X,E) \arrow{r}{r_x} & E_x \rar & H^1(X,E\otimes L_x^{-1}).
+     \end{tikzcd}
+   \end{center}
+
+   It thus suffices to prove that $h^1(X,E\otimes L_x^{-1})=0$, which results from the fact that
+   \begin{equation*}
+     \deg(E\otimes L_x^{-1}) = \deg (E) -r > r(2g-2),
+   \end{equation*}
+   and from the proof of (ii).
+
+   This concludes the proof of Lemma \ref{1.20}. \\
+   
+   Let us keep the notations of Lemma \ref{1.20} and put $p=d+r(1-g)$. It follows from Lemma \ref{1.20} that the bundle $E$ is isomorphic to a quotient of $\OO\otimes k^p$. Moreover, the Hilbert polynomial of $E$ is
+   \begin{equation*}
+     P(T)=p+r\deg(\OO(1)) T.
+   \end{equation*}
+   In particular, it does not depend of the class of $E$ in $S(r,d)$.
+  
+   We define now the Grothendieck schemes. (See \cite{7}).
+
+   Let $\FF$ be a coherent sheaf on $X$, $P_0$ an element of $k[T]$ of degree $\leq 1$. 
+
+   A flat family of quotients of $\FF$ with Hilbert polynomial $P_0$ parametrized by a Noetherian $k$-scheme $Y$ is given by a coherent sheaf $\GG$ on $Y\times_k X$, flat over $Y$, and by a surjective morphism
+   \begin{equation*}
+     p_X^*(\FF) \longrightarrow \GG
+   \end{equation*}
+   ($p_X$ denoting the projection $Y\times_k X \rightarrow X$) such that for every point $y$ of $Y$ the Hilbert polynomial of $\GG_y$ over $X_y$ is $P_0$. 
+
+   Two such families $\GG$ and $\GG'$ are said isomorphic if there exists an isomorphism
+   \begin{equation*}
+     g: \GG \longrightarrow \GG',
+   \end{equation*}
+   such that the diagram
+   \begin{center}
+     \begin{tikzcd}
+       & \GG \arrow{dd}{g} \\ 
+       p_X^*(\FF) \arrow{ru} \arrow{rd} & \\
+       & \GG'
+     \end{tikzcd}
+   \end{center}
+   is commutative.
+
+   On the other hand, if $f:Y\rightarrow Y'$ is a morphism of Noetherian $k$-schemes and $\GG'$ is such a family on $Y'$, we define in an obvious way the family $f^*(\GG')$. 
+
+   We can show that the functor
+   \begin{equation*}
+     \Sch \longrightarrow \Set
+   \end{equation*}
+   associating to $Y$ the set of isomorphism classes of flat families of quotients of $\FF$ parametrized by $Y$ is representable by a projective  algebraic $k$-scheme. We denote this $k$-scheme by $\Quot^{P_0}_{\FF/X/k}$.
+
+   We put
+   \begin{equation*}
+     Q=\Quot^P_{\OO \times k^p/X/k}.
+   \end{equation*}
+   It follows from the universal property of $Q$ that there exists over $Q\times X$ a flat family $\mathscr{U}$ of quotients of $\OO\otimes k^p$, which is ``universal''. 
+
+   Let
+   \begin{equation*}
+     \rho:p^*_X(\OO\otimes k^p) \longrightarrow \mathscr{U}
+   \end{equation*}
+   be the canonical morphism.
+
+   There exists an open subset $R$ of $Q$ characterized by the following property: for every point $q$ of $R$, the sheaf $\mathscr{U}_q$ is locally free and the canonical map:
+   \begin{equation*}
+     H^0(X_q,\OO\otimes k^p) \longrightarrow H^0(X_q,\mathscr{U}_q)
+   \end{equation*}
+   is an isomorphism. The restriction $\mathscr{V}$ of $\mathscr{U}$ to $R$ is a locally free sheaf of rank $r$. Endowed with $\mathscr{V}$, $R$ has the following local universal property:
+   \begin{prop}\label{1.21}
+     Given a Noetherian $k$-scheme $Y$ and a locally free sheaf $F$ of rank $r$ on $Y\times_k X$, such that for every point $y$ of $Y$, we have
+     \begin{itemize}
+       \item[\rm (i)] $F_y$ has degree $d$
+\item[\rm (ii)] $F_y$ is generated by global sections
+\item[\rm (iii)] $h^1(X,F_y)=0$,
+     \end{itemize}
+     for every point $y_0$ of $Y$, there exists a neighbourhood $Y_0$ of $y_0$ and a morphism $f:Y_0 \rightarrow R$ such that
+     \begin{equation*}
+       F|_{Y_0 \times X} \cong f^{\#}(\mathscr{V}).
+     \end{equation*}
+   \end{prop}
+
+   We take as $Y_0$ an affine neighbourhood of $y_0$. We easily see that the sheaf $p_{Y*}(F)$ is locally free of rank $p$ on $Y$ ($p_Y$ denoting the projection $Y\times_k X \rightarrow Y$). On $Y_0$ it is then isomorphic to $\OO_{Y_0}\otimes k^p$. After (ii), the canonical morphism
+   \begin{equation*}
+     p_Y^*(p_{Y*}(F))\longrightarrow F
+   \end{equation*}
+   is surjective. Over $Y_0$, $p_Y^*(p_{Y*}(F))$ is isomorphic to $p_X^*(\OO \otimes k^p)$, we thus have a surjective morphism
+   \begin{equation*}
+     p^*_X(\OO \otimes k^p) \longrightarrow F.
+   \end{equation*}
+   There exists thus a morphism $f:Y_0 \rightarrow Q$ such that $F|_{Y_0 \times X} \cong f^{\#}(\mathscr{U})$. But it is immediate that $f$ takes values on $R$.
+
+   This concludes the proof of Proposition \ref{1.21}. \\
+
+   The group $\GL(p)=\Aut(\OO\otimes k^p)$ acts on the sheaf $\UU$. We will be happy with making this action explicit: let $\rho:p_X^*(\OO\otimes k^p) \rightarrow \UU$ the canonical morphism, and $A$ an element of $\GL(p)$. We can construct a flat family parametrized by $Q$ in the following way: the underlying sheaf is $\UU$ but the surjective morphism is $\rho \circ p_X^*(A^{-1})$. This family defines an automorphism $\sigma_A$ of $Q$ and an isomorphism $\tau_A:\UU \rightarrow \sigma^{\#}_A(\UU)$. For every point $z$ of $Q\times_k X$ and every element $u$ of $\UU_z$, we have
+   \begin{equation*}
+     Au=\tau_A(u).
+   \end{equation*}
+   The underlying automorphism of $Q$ is $\sigma_A$.
+
+   We remark that the action of the subgrop $k^* I$ of $\GL(p)$ on $Q$ is trivial, and as a consequence the action of $\GL(p)$ on $Q$ induces one of $\PGL(p)$. However the action of $k^* I$ on $\UU$ is that of $k^*$ by homothety, and thus it is not trivial.
+
+   We can make precise the action of $\PGL(p)$ on $R$:
+   \begin{prop}\label{1.22}
+     \begin{itemize}
+       \item[\rm (i)] The open set $R$ is $\PGL(p)$-invariant. 
+       \item[\rm (ii)] For every pair $(q_1,q_2)$ of closed points of $R$ the vector bundles over $X$ $\UU_{q_1}$ and $\UU_{q_2}$ are isomorphic if and only if $q_1$ and $q_2$ are in the same orbit of the action of $\PGL(p)$ on $R$.
+       \item[\rm (iii)] For every point $q$ of $R$, the stabilizer of $q$ for the action of $\PGL(p)$ is isomorphic to the quotient $\Aut(\UU_q)/k^*I$.
+     \end{itemize}
+     {\rm (See Seshadri \cite{36} Prop.6 of chap.II, and Newstead \cite{29} Thm.5.3 p.138 where it is also proven that $R$ is open).}
+   \end{prop}
+
+   \begin{prop}\label{1.23}
+     The scheme $R$ is an irreducible and smooth quasi-projective variety.
+   \end{prop}
+
+   After Grothendieck, $Q$ is a projective scheme over $k$. Thus it suffices to prove that $R$ is connected and smooth.
+
+   For every closed point $q_0$ of $R$, we have a morphism
+   \begin{align*}
+      \PGL(p) &\longrightarrow R(k)\\ 
+       A &\longmapsto A\cdot q 
+     \end{align*}
+     where the image consists on the closed points $q$ of $R$ such that the vector bundles $\UU_q$ and $\UU_{q_0}$ on $X$ are isomorphic.
+
+     In order to show that $R$ is connected, it thus suffices to show that for every pair $(q_1,q_2)$ of closed points of $R$, there exists a closed point $q_0$ of $R$, and a connected component $R_1$ (resp. $R_2$) of $R$ gathering the orbits of $q_1$ and $q_0$ (resp. $q_2$ and $q_0$).
+
+     We use the following lemma, due to Serre:
+     \begin{lemma}\label{1.24}
+       Let $F$ be a vector bundle on $X$ generated by global sections. Then there exists an exact sequence
+       \begin{center}
+	 \begin{tikzcd}
+	   0\rar & \OO \otimes k^{\rk(F)-1} \rar & F \rar & \det(F) \rar& 0.	    
+	 \end{tikzcd}
+       \end{center}
+     \end{lemma}
+
+     For every point $x$ of $X$ the canonical morphism $H^0(X,F)\rightarrow F_x$ is surjective and the set of sections of $E$ that vanish on at least one point of $X$ is a subvariety $Y$ of $H^0(X,F)$ of dimension lower or equal than $h^0(X,F) - \rk(F) +1$. Thus there exists a vector subspace $M$ of $H^0(X,F)$ of rank $\rk(F)-1$, not intersecting $Y$. The canonical morphism of vector bundles on $X$
+     \begin{equation*}
+       \OO \otimes M \longrightarrow F
+     \end{equation*}
+     is injective. Its cokernel is of rank $1$ and thus isomorpic to $\det(F)$.
+
+     This concludes the proof of Lemma \ref{1.24}. \\
+
+     We consider now the Jacobian $J^{(d)}$ and a Poincaré bundle $\LL$ on $J^{(d)}\times X$, we denote $E$ the trivial bundle on $J^{(d)}\times X$, with fibre $k^{r-1}$. The sheaf $R^1p_{J*}(\Hom(\LL,E))$ on $J^{(d)}$ is locally free of rank $(r-1)(g+d-1)$, $p_J$ denoting the projection $J^{(d)}\times X \rightarrow J^{(d)}$. We denote by $W$ this bundle and $\pi:W \rightarrow J^{(d)}$ the canonical projection. On each point $L$ of $J^{(d)}$, the fibre $W_L$ is $H^1(X,\Hom(\LL_L,\OO\otimes k^p))$.
+
+     There exists a bundle $F$ over $W\times X$, and an exact sequence
+     \begin{center}
+       \begin{tikzcd}
+	 0 \rar & \pi^{\#}(E) \rar & F \rar & \pi(\LL) \rar & 0
+       \end{tikzcd}
+     \end{center}
+     such that for every point $w$ of $W$, the restriction of the exact sequence above to $w\times X$:
+     \begin{center}
+       \begin{tikzcd}
+	 0 \rar & \OO\otimes k^p \rar & F_w \rar & \LL_{\pi(w)} \rar & 0
+       \end{tikzcd}
+     \end{center}
+     is associated to the element $w$ of $H^1(X,\underline{\Hom}(\LL_{\pi(w)},\OO\otimes k^p))$. This follows from the Remark 2 following the Proposition 2 of Appendix II [REF] and from the fact that for every point $L$ of $J^{(d)}$, we have $h^0(X,\LL^*_L)=0$. The points $w$ of $W$ corresponding to the bundles having the properties of Lemma \ref{1.20} form an open subset $W'$ of $W$.
+
+     After Lemma \ref{1.24}, there exists a point $w_1$ (resp. $w_2$) of $W'$, such that $F_{w_1}$ is isomorphic to $\UU_{q_1}$ (resp. $F_{w_2}$\dots).
+
+     After Proposition \ref{1.21}, there exists an open subset $W_1$ (resp. $W_2$) of $W'$ and a morphism $f_1:W_1 \rightarrow R$ (resp. $f_2$\dots) such that $F|_{W_1 \times X}\cong f_1^{\#}(\mathscr{V})$ (resp. \dots).
+
+     But being $W$ irreducible, $W_1$ and $W_2$ have nonempty intersection and are connected. This suffices to show our assertion and proves connectedness of $R$.
+
+     For smoothness, it is necessary to use the differential properties of $Q$. If $q$ is a closed point of $R$, we have an exact sequence of morphisms of vector bundles on $X$:
+     \begin{center}
+       \begin{tikzcd}
+	 0 \rar & C_q \rar & \OO\otimes k^p \rar & U_q \rar & 0,
+       \end{tikzcd}
+     \end{center}
+     $C_q$ denoting the kernel bundle of $\rho|_{ \left\{ q \right\} \times X }$.
+
+     After Grothendieck, $R$ is smooth at $q$ if and only if we have $h^1(X,\underline{\Hom}(C_q,\UU_q))=0$, which follows immediately form the above exact sequence and from the fact that, by the definition of $R$, we have $h^1(X,\UU_q)=0$.
+
+     This concludes the proof of Proposition \ref{1.23}. \\
+
+     \paragraph{Remark:} The tangent space to $R$ at $q$ is identified with $\Hom(C_q,\UU_q)$. This allows to compute the dimension of $R$ by using the exact sequence above. We find
+     \begin{equation*}
+       \dim(R) = p^2 + r^2(g-1).
+     \end{equation*}
+
+     From the exact sequence above, we deduce the exact sequence
+     \begin{center}
+       \begin{tikzcd}
+	 0 \rar & \End(\UU_q) \rar & \Hom(\OO\otimes k^p,\UU_q) \arrow{r}{a} & \Hom(C_q,\UU_q)=T_{R,q}
+       \end{tikzcd}
+     \end{center}
+     The space $\Hom(\OO\otimes k^p,\UU_q)$ is identified with $M(p)$, the space of $p\times p$ matrices, which is also $T_{\PGL(p),kI}$. The map $a$ is just the tangent map
+     \begin{align*}
+       T_{\PGL(p),kI}&\longrightarrow T_{R,q}, 
+       \end{align*}
+       coming form the morphism
+       \begin{align*}
+	  \PGL(p) &\longrightarrow R\\ 
+	   A &\longmapsto A\cdot q. 
+	 \end{align*}
+
+	 \subsection{Construction of the moduli spaces}
+
+	 \section{The complex case}\label{section 1IV}
+
+	 \chapter{Deformation of the moduli varieties of stable bundles}
+
+
+      \nocite{*}
+		     \bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}
+
+
